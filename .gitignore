@@ -53,3 +53,16 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Visual Studio Code
+.vs/
+.vscode/
+
+## Build output
+[Bb]in/
+[Oo]bj/
+
+## Environment / secrets
+.env
+.env.*
+!.env.example
