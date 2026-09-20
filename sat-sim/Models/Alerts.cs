@@ -16,4 +16,4 @@ public class Alerts
 		this.type = type;
 		this.status = status;
 	}
-}
+} 
