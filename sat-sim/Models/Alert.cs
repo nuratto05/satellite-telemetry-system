@@ -3,25 +3,19 @@
 public class Alert
 {
 	public int Id {  get; set; }
-	public string SatelliteId { get; set; }
+	public int SatelliteId { get; set; }
     public DateTime timestamp { get; set; }
+	public SeverityStatus Severity { get; set; } = SeverityStatus.Moderate;
+    public SeverityStatus VelocityLevel { get; set; } = SeverityStatus.Moderate;
+    public SeverityStatus TemperatureLevel { get; set; } = SeverityStatus.Moderate;
+    public SeverityStatus BatteryLevel { get; set; } = SeverityStatus.Moderate;
 
-	public SeverityStatus severity { get; set; }
+    public Alert() { }
 
-	public SeverityStatus VelocityLevel { get; set; }
-	public SeverityStatus TemperatureLevel { get; set; }
-	public SeverityStatus BatteryLevel { get; set; }
-
-	public Alert() { }
-
-	public Alert(int id, string satelliteName, DateTime timestamp, SeverityStatus severity, SeverityStatus velocityLevel, SeverityStatus tempLevel, SeverityStatus batteryLevel)
+	public Alert(int id, int satelliteName, DateTime timestamp)
 	{
 		this.Id = id;
 		this.SatelliteId = satelliteName;
 		this.timestamp = timestamp;
-		this.severity = severity;
-		this.VelocityLevel = velocityLevel;
-		this.TemperatureLevel = tempLevel;
-		this.BatteryLevel = batteryLevel
 	}
 } 

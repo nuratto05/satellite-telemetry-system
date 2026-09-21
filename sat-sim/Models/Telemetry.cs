@@ -12,13 +12,16 @@ public class Telemetry
 	public int Temperature { get; set; }
 	public int BatteryLevel { get; set; }
 
-	public Telemetry(int id, int satelliteId, DateTime timestamp, double longitude, double latitude, int velocity, int temperture, int batteryLevel)
+	public Telemetry() { }
+
+	public Telemetry(int id, int satelliteId, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
 	{
 		this.Id = id;
 		this.SatelliteId = satelliteId;
 		this.Timestamp = timestamp;
 		this.Longitude = longitude;
 		this.Latitude = latitude;
+		this.Altitude = altitude;
 		this.Velocity = velocity;
 		this.Temperature = temperture;
 		this.BatteryLevel = batteryLevel;

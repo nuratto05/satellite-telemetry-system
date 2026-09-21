@@ -14,6 +14,8 @@ public class TelemetryGenerator
 
 	public Telemetry generate(Satellite satallite)
 	{
+        if (satallite == null) throw new ArgumentNullException(nameof(satallite));
+
         Telemetry newTel;
 
         if (!telemetryMap.ContainsKey(satallite))
@@ -26,6 +28,7 @@ public class TelemetryGenerator
                 random.NextDouble() * 180 - 90, // Latitude
                 random.Next(1000, 30000), // Velocity mph
 				random.Next(-10, 40), // Temperature
+                random.Next(100, 1000), // Altitude
                 random.Next(50, 101)// Battery level
             );
 
@@ -41,6 +44,7 @@ public class TelemetryGenerator
                 Math.Round(prevTel.Latitude + 0.05, 2),
                 prevTel.Velocity + random.Next(-1000, 1000),
                 prevTel.Temperature + random.Next(-2, 3),
+                prevTel.Altitude + random.Next(-2, 2),
                 prevTel.BatteryLevel
             );
         }

@@ -2,6 +2,8 @@
 
 public class AlertGenerator
 {
+    int alertCount = 0;
+
     public AlertGenerator()
     {
     }
@@ -11,11 +13,12 @@ public class AlertGenerator
     {
         if (telemetry == null) throw new ArgumentNullException(nameof(telemetry));
 
-        var alert = new Alert
-        {
-            telemetry.SatelliteId.ToString(),
+        Alert alert = new Alert
+        (
+            alertCount++,
+            telemetry.SatelliteId,
             telemetry.Timestamp
-        };
+        );
 
         SeverityStatus aggregated = SeverityStatus.Moderate;
 
@@ -23,17 +26,15 @@ public class AlertGenerator
         CheckBatteryLevel(alert, telemetry, ref aggregated);
         CheckTemperature(alert, telemetry, ref aggregated);
 
-        alert.severity = aggregated;
+        alert.Severity = aggregated;
 
-        if (aggregated == SeverityStatus.Moderate)
-            return null;
+        if (aggregated == SeverityStatus.Moderate) return null;
 
         return alert;
     }
 
     private void CheckVelocity(Alert alert, Telemetry telemetry, ref SeverityStatus aggregated)
     {
-        if (telemetry == null) return;
 
         int velocity = telemetry.Velocity;
 
@@ -51,7 +52,6 @@ public class AlertGenerator
 
     private void CheckBatteryLevel(Alert alert, Telemetry telemetry, ref SeverityStatus aggregated)
     {
-        if (telemetry == null) return;
 
         int batteryLevel = telemetry.BatteryLevel;
 
@@ -59,8 +59,7 @@ public class AlertGenerator
         {
             alert.BatteryLevel = SeverityStatus.Critical; // BATTERY IS TOO LOW TO POWER THRUSTERS
             aggregated = MaxSeverity(aggregated, SeverityStatus.Critical);
-        }
-        else if (batteryLevel <= 50)
+        }else if (batteryLevel <= 50)
         {
             alert.BatteryLevel = SeverityStatus.Severe; // BATTERY IS ENTERING DANGEROUS LEVELS
             aggregated = MaxSeverity(aggregated, SeverityStatus.Severe);
@@ -69,7 +68,6 @@ public class AlertGenerator
 
     private void CheckTemperature(Alert alert, Telemetry telemetry, ref SeverityStatus aggregated)
     {
-        if (telemetry == null) return;
 
         int temperature = telemetry.Temperature;
 

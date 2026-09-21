@@ -1,6 +1,6 @@
 ﻿using System;
 
-public enum SatelliteStatus
+public enum Status
 {
 	Active,
 	Inactive,

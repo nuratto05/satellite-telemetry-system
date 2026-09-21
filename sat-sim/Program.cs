@@ -1,4 +1,6 @@
-﻿Satellite satellite = new Satellite(1, "Satellite-1", "active");
+﻿Mission mission = new Mission(1, "explorer", "test");
+Satellite satellite = new Satellite(1, "Satellite-1", mission, "US");
+
 
 TelemetryGenerator generator = new TelemetryGenerator();
 
