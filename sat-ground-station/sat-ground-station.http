@@ -4,3 +4,20 @@ GET {{sgs_localhost}}/api/Telemetry/
 Accept: application/json
 
 ###
+
+
+POST {{sgs_localhost}}/api/Telemetry/
+Content-Type: application/json
+
+{
+  "satelliteId": 1,
+  "timestamp": "2026-09-21T12:00:00Z",
+  "longitude": 12.34567,
+  "latitude": 54.32109,
+  "altitude": 400,
+  "velocity": 7600,
+  "temperature": 25,
+  "batteryLevel": 95
+}
+
+###
