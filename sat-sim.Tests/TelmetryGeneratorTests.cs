@@ -30,7 +30,8 @@ namespace sat_sim.TelemetryTests
             Telemetry tel = generateTelemetry.generate(satellite);
 
             Assert.NotNull(tel);
-
+             
         }
     }
 }
+ 

@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-
+ 
 namespace sat_sim.AlertTests
 {
     public class AlertGeneratorTests
