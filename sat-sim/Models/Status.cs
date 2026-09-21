@@ -1,6 +1,6 @@
 ﻿using System;
 
-public enum MissionStatus
+public enum Status
 {
 	Active,
 	Inactive

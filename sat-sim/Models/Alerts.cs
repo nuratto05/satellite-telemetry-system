@@ -6,14 +6,16 @@ public class Alerts
 	public string name { get; set; }
 	public string type { get; set; }
 	public string description { get; set; }
-	public string timestamp { get; set; }
-	public int status { get; set; }
+	public DateTime timestamp { get; set; }
+	public string status { get; set; }
 
-	public Alerts(int id, int name, int type, int status)
+	public Alerts(int id, string name, string type, string description, DateTime timestamp, string status)
 	{
 		this.id = id;
 		this.name = name;
 		this.type = type;
+		this.description = description;
+		this.timestamp = timestamp;
 		this.status = status;
 	}
 } 

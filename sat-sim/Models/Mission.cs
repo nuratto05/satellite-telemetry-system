@@ -7,9 +7,11 @@ public class Mission
 	public string description { get; set; }
 	public Status status { get; set; }
 
-	public Mission(int id, string name)
+	public Mission(int id, string name, string description)
 	{
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.status = status.Active;
 	}
 }
