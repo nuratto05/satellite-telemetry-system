@@ -1,7 +1,8 @@
 ﻿using System;
 
-public enum Status
+public enum SatelliteStatus
 {
 	Active,
-	Inactive
+	Inactive,
+
 }

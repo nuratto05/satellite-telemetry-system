@@ -24,9 +24,9 @@ public class TelemetryGenerator
                 DateTime.UtcNow,
                 random.NextDouble() * 360 - 180, //Longitude
                 random.NextDouble() * 180 - 90, // Latitude
-                random.Next(25000, 30000), // Velocity
-				random.Next(10, 40), // Temperature
-                random.Next(80, 101)// Battery level
+                random.Next(1000, 30000), // Velocity mph
+				random.Next(-10, 40), // Temperature
+                random.Next(50, 101)// Battery level
             );
 
         }else
@@ -39,7 +39,7 @@ public class TelemetryGenerator
                 DateTime.UtcNow,
                 Math.Round(prevTel.Longitude + 0.05, 2),
                 Math.Round(prevTel.Latitude + 0.05, 2),
-                prevTel.Velocity + random.Next(-100, 101),
+                prevTel.Velocity + random.Next(-1000, 1000),
                 prevTel.Temperature + random.Next(-2, 3),
                 prevTel.BatteryLevel
             );
