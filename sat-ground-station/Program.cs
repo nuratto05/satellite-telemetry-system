@@ -1,11 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using sat_ground_station.Controllers;
+using sat_ground_station.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<TelemetryRepository>(options =>
+{
+     options.UseNpgsql("Host=localhost;Port=5432;Database=telSystemDb;Username=postgres;Password=shiba");
+});
 
 var app = builder.Build();
 
@@ -15,8 +23,25 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else
+{
+    //app.UseHttpsRedirection();
+}
 
-app.UseHttpsRedirection();
+using (var scope = app.Services.CreateScope())
+{
+    var provider = scope.ServiceProvider;
+    var db = provider.GetService<TelemetryRepository>();
+
+    if (db != null)
+    {
+        Console.WriteLine(db.Database.CanConnect());
+    }
+    else
+    {
+        Console.WriteLine("TelemetryRepository not registered because no connection string was provided.");
+    }
+}
 
 app.UseAuthorization();
 
