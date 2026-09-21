@@ -57,6 +57,8 @@ dkms.conf
 # Visual Studio Code
 .vs/
 .vscode/
+*.user
+*.suo
 
 ## Build output
 [Bb]in/
