@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace sat_ground_station.Models;
 
+namespace sat_ground_station.Models;
 [Table("Telemetry")]
 public class Telemetry
 {

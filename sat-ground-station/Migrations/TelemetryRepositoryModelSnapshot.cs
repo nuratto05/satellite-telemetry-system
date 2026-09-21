@@ -10,7 +10,7 @@ using sat_ground_station.Repository;
 
 namespace sat_ground_station.Migrations
 {
-    [DbContext(typeof(TelemetryRepository))]
+    [DbContext(typeof(Repository.AppDbContext))]
     partial class TelemetryRepositoryModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

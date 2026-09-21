@@ -15,39 +15,43 @@ namespace sat_ground_station.Controllers;
 public class TelemetryController : ControllerBase
 {
 
-    private readonly TelemetryRepository _telemetryRepository;
+    private readonly Repository.AppDbContext _dbContext;
 
-    public TelemetryController(TelemetryRepository telemetryRepository)
+    public TelemetryController(Repository.AppDbContext _dbContext)
     {
-        _telemetryRepository = telemetryRepository;
+        _dbContext = _dbContext;
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<Telemetry>>> Get100MostRecentTelemetries()
+    public async Task<ActionResult<List<Telemetry>>> GetMostRecentTelemetries()
     {
-        List<Telemetry> telemetries =  await _telemetryRepository.Telemetries.OrderByDescending(t => t.Timestamp).Take(100).ToListAsync();
+        int limit = 100;
+
+        List<Telemetry> telemetries =  await _dbContext.Telemetries.OrderByDescending(t => t.Timestamp).Take(limit).ToListAsync();
 
         if (telemetries == null || telemetries.Count == 0)
         {
             return NotFound();
         }
 
-        return telemetries;
+        return Ok(telemetries);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<List<Telemetry>>> Get100SpecificTelemetries(int id)
+    [HttpGet("{satelliteId}")]
+    public async Task<ActionResult<List<Telemetry>>> GetMostRecentTelemetriesBySatelliteId(int satelliteId)
     {
-        if (id == null) return NotFound();
+        int limit = 100;
 
-        List<Telemetry> telemetries =  await _telemetryRepository.Telemetries.OrderByDescending(t => t.SatelliteId).Take(100).ToListAsync();
+        if (satelliteId == null) return NotFound();
+
+        List<Telemetry> telemetries =  await _dbContext.Telemetries.OrderByDescending(t => t.SatelliteId == satelliteId).Take(limit).ToListAsync();
 
         if(telemetries == null || telemetries.Count == 0)
         {
             return NotFound();
         }
 
-        return telemetries;
+        return Ok(telemetries);
     }
 
     [HttpPost]
@@ -56,8 +60,8 @@ public class TelemetryController : ControllerBase
 
         if (tel == null) return BadRequest("Invalid Request");
 
-        await _telemetryRepository.Telemetries.AddAsync(tel);
-        await _telemetryRepository.SaveChangesAsync();
+        await _dbContext.Telemetries.AddAsync(tel);
+        await _dbContext.SaveChangesAsync();
 
         return Ok(tel);
     }

@@ -11,7 +11,7 @@ using sat_ground_station.Repository;
 
 namespace sat_ground_station.Migrations
 {
-    [DbContext(typeof(TelemetryRepository))]
+    [DbContext(typeof(Repository.AppDbContext))]
     [Migration("20260921213647_TelemetryDeploy")]
     partial class TelemetryDeploy
     {

@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<TelemetryRepository>(options =>
+builder.Services.AddDbContext<DbContext>(options =>
 {
      options.UseNpgsql("Host=localhost;Port=5432;Database=telSystemDb;Username=postgres;Password=shiba");
 });
@@ -31,7 +31,7 @@ else
 using (var scope = app.Services.CreateScope())
 {
     var provider = scope.ServiceProvider;
-    var db = provider.GetService<TelemetryRepository>();
+    var db = provider.GetService<sat_ground_station.Repository.AppDbContext>();
 
     if (db != null)
     {
