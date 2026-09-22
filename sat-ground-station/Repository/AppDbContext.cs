@@ -16,4 +16,12 @@ public class AppDbContext : DbContext
 
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Satellite>()
+            .HasOne(s => s.Mission)
+            .WithMany(m => m.Satellites)
+            .HasForeignKey(s => s.MissionId);
+    }
+
 }

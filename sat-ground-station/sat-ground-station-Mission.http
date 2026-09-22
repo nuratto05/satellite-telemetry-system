@@ -1,0 +1,41 @@
+@sgs_localhost = http://localhost:5000
+
+### Get Missions
+
+GET {{sgs_localhost}}/api/Mission/
+Accept: application/json
+
+###
+
+### Get Mission By Id
+
+GET {{sgs_localhost}}/api/Mission/1
+Accept: application/json
+
+###
+
+### Create Mission
+
+POST {{sgs_localhost}}/api/Mission/
+Content-Type: application/json
+
+{
+  "name": "Mission Alpha",
+  "description": "Earth observation and telemetry collection mission",
+  "status": 2
+}
+
+###
+
+### Update Mission
+
+PUT {{sgs_localhost}}/api/Mission/1
+Content-Type: application/json
+
+{
+  "name": "Mission Alpha Updated",
+  "description": "Updated mission description",
+  "status": 0
+}
+
+###
