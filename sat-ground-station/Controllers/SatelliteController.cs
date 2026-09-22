@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using sat_ground_station.Models;
+using sat_ground_station.Models.Dto;
 using sat_ground_station.Repository;
 
 /// <summary>
@@ -17,9 +18,9 @@ public class SatelliteController : ControllerBase
 
     private readonly AppDbContext _dbContext;
 
-    public SatelliteController(DbContext _dbContext)
+    public SatelliteController(AppDbContext dbContext)
     {
-        _dbContext = _dbContext;
+        _dbContext = dbContext;
     }
 
     [HttpGet]
@@ -27,7 +28,7 @@ public class SatelliteController : ControllerBase
     {
         int limit = 100;
 
-        List<Satellite> satellites = await _dbContext.Satellites.OrderBy(s => s.Id).Take(limit).ToListAsync();
+        List<Satellite> satellites = await _dbContext.Satellites.Include(s => s.Mission).OrderByDescending(s => s.Id).Take(limit).ToListAsync();
 
         if(satellites == null || satellites.Count == 0)
         {
@@ -63,6 +64,30 @@ public class SatelliteController : ControllerBase
         await _dbContext.SaveChangesAsync();
 
         return Ok(sat);
+    }
+
+    [HttpPut("{satelliteId}")]
+    public async Task<ActionResult<Satellite>> UpdateSatellite(int satelliteId, [FromBody] UpdateSatelliteObject updatedSatellite)
+    {
+        Satellite? satellite = await _dbContext.Satellites.FirstOrDefaultAsync(s => s.Id == satelliteId);
+
+        if (satellite == null)
+        {
+            return NotFound();
+        }
+
+        if (updatedSatellite.Status != null){
+            satellite.Status = updatedSatellite.Status.Value;
+        }
+
+        if (updatedSatellite.MissionId != null)
+        {
+            satellite.MissionId = updatedSatellite.MissionId.Value;
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        return Ok(satellite);
     }
 
 }

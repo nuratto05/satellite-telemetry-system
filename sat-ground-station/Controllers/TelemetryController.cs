@@ -15,11 +15,11 @@ namespace sat_ground_station.Controllers;
 public class TelemetryController : ControllerBase
 {
 
-    private readonly Repository.AppDbContext _dbContext;
+    private readonly AppDbContext _dbContext;
 
-    public TelemetryController(Repository.AppDbContext _dbContext)
+    public TelemetryController(AppDbContext dbContext)
     {
-        _dbContext = _dbContext;
+        _dbContext = dbContext;
     }
 
     [HttpGet]
