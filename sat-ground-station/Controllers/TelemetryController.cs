@@ -44,7 +44,7 @@ public class TelemetryController : ControllerBase
 
         if (satelliteId == null) return NotFound();
 
-        List<Telemetry> telemetries =  await _dbContext.Telemetries.OrderByDescending(t => t.SatelliteId == satelliteId).Take(limit).ToListAsync();
+        List<Telemetry> telemetries =  await _dbContext.Telemetries.Where(t => t.SatelliteId == satelliteId).OrderByDescending(t => t.SatelliteId == satelliteId).Take(limit).ToListAsync();
 
         if(telemetries == null || telemetries.Count == 0)
         {

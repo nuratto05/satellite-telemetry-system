@@ -39,7 +39,7 @@ public class MissionController : ControllerBase
     }
 
     [HttpGet("{missionId}")]
-    public async Task<ActionResult<List<Mission>>> GetMissionsBySateliteId(int missionId)
+    public async Task<ActionResult<List<Mission>>> GetMissionBySateliteId(int missionId)
     {
         Mission? mission = await _dbContext.Missions.Include(m => m.Satellites).FirstOrDefaultAsync(m => m.Id == missionId);
 
