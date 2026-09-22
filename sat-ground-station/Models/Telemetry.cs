@@ -43,17 +43,4 @@ public class Telemetry
     [Column("batteryLevel")]
     public int BatteryLevel { get; set; }
 
-	public Telemetry() { }
-
-	public Telemetry(int satelliteId, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
-	{
-		this.SatelliteId = satelliteId;
-		this.Timestamp = timestamp;
-		this.Longitude = longitude;
-		this.Latitude = latitude;
-		this.Altitude = altitude;
-		this.Velocity = velocity;
-		this.Temperature = temperture;
-		this.BatteryLevel = batteryLevel;
-	}
 }

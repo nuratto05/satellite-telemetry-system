@@ -25,11 +25,4 @@ public class Mission
 
     public ICollection<Satellite>? Satellites { get; set; }
 
-    public Mission() { }
-
-	public Mission(string missionName, string description)
-	{
-		this.Name = missionName;
-		this.Description = description;
-	}
 }

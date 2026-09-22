@@ -30,12 +30,4 @@ public class Satellite
     [JsonIgnore]
     public Mission? Mission { get; set; }
 
-    public Satellite() { }
-
-    public Satellite(string satelliteId, int missionId, string country)
-    {
-        this.SatelliteId = satelliteId;
-        this.MissionId = missionId;
-        this.Country = country;
-    }
 }

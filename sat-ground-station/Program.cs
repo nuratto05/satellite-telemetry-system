@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using sat_ground_station.Controllers;
 using sat_ground_station.Repository;
+using System.Text.Json.Serialization;
 
 DotNetEnv.Env.Load("../../../../.env");
 
@@ -8,14 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(
+        new JsonStringEnumConverter()
+    );
+});
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();nvironment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING")
-);
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-     options.UseNpgsql(Environment.GetEnvironmentVariable("POSTGRES_CONNECTION_STRING"));
+     options.UseNpgsql(Environment.GetEnvironmentVariable("SGS_POSTGRES_CONNECTION_STRING"));
 });
 
 var app = builder.Build();

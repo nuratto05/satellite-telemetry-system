@@ -20,9 +20,9 @@ POST {{sgs_localhost}}/api/Mission/
 Content-Type: application/json
 
 {
-  "name": "Mission Alpha",
+  "name": "Mission Luna",
   "description": "Earth observation and telemetry collection mission",
-  "status": 2
+  "status": "Active"
 }
 
 ###
@@ -35,7 +35,7 @@ Content-Type: application/json
 {
   "name": "Mission Alpha Updated",
   "description": "Updated mission description",
-  "status": 0
+  "status": "Active"
 }
 
 ###
