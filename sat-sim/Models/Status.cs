@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace sat_ground_station.Models;
+namespace sat_sim.Models;
 public enum Status
 {
 	Active,
