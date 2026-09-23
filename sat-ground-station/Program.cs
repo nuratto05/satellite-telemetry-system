@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using sat_ground_station.Controllers;
 using sat_ground_station.Repository;
+using sat_ground_station.Service;
 using System.Text.Json.Serialization;
 
-DotNetEnv.Env.Load("../../../../.env");
+DotNetEnv.Env.Load();
+DotNetEnv.Env.TraversePath().Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,10 +20,19 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<TelemetryService>();
+builder.Services.AddScoped<CheckSeverity>();
+builder.Services.AddHostedService<TcpRecieverService>();
 
+var connectionString = (string) Environment.GetEnvironmentVariable("SGS_POSTGRES_CONNECTION_STRING");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    Console.WriteLine("SGS_POSTGRES_CONNECTION_STRING is not set or empty. Skipping DbContext registration.");
+}
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-     options.UseNpgsql(Environment.GetEnvironmentVariable("SGS_POSTGRES_CONNECTION_STRING"));
+     options.UseNpgsql(connectionString);
 });
 
 var app = builder.Build();
@@ -48,7 +59,7 @@ using (var scope = app.Services.CreateScope())
     }
     else
     {
-        Console.WriteLine("TelemetryRepository not registered because no connection string was provided.");
+        Console.WriteLine("AppDbContext not registered because no connection string was provided.");
     }
 }
 
