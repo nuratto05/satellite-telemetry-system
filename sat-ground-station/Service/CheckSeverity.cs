@@ -35,12 +35,12 @@ public class CheckSeverity
         int velocity = telemetry.Velocity;
         alert.Severity = SeverityStatus.Moderate;
 
-        if (velocity <= 16000) // TOO SLOW STARTS TO DE-ORBIT
+        if (velocity <= 16500) // TOO SLOW STARTS TO DE-ORBIT
         {
             alert.VelocityLevel = SeverityStatus.Severe;
             aggregated = MaxSeverity(aggregated, SeverityStatus.Severe);
         }
-        else if (velocity >= 27000)// TOO FAST LOST TO DEEP SPACE
+        else if (velocity >= 28000)// TOO FAST LOST TO DEEP SPACE
         {
             alert.VelocityLevel = SeverityStatus.Critical;
             aggregated = MaxSeverity(aggregated, SeverityStatus.Critical);

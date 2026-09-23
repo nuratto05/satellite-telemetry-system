@@ -1,4 +1,5 @@
-﻿using System;
+﻿using sat_sim.Models;
+using System;
 
 public class TelemetryGenerator
 {
@@ -32,7 +33,7 @@ public class TelemetryGenerator
                 startingLongitude, //Longitude
                 CalculateLatitude(startingAngle), // Latitude
                 random.Next(400, 600), // Altitude
-                random.Next(27000, 28000), // Velocity mph
+                random.Next(20000, 29000), // Velocity mph
 				random.Next(-10, 40), // Temperature
                 100 // Battery level
             );
@@ -60,8 +61,8 @@ public class TelemetryGenerator
 
             //Keep within range
             newAltitude = Math.Clamp(newAltitude, 480, 520);
-            newVelocity = Math.Clamp(newVelocity, 27000, 28200);
-            newTemperature = Math.Clamp(newTemperature, -30, 60);
+            newVelocity = Math.Clamp(newVelocity, 15000, 29000);
+            newTemperature = Math.Clamp(newTemperature, -80, 130);
             newBatteryLevel = Math.Clamp(newBatteryLevel, 10, 100);
 
             newTel = new Telemetry(

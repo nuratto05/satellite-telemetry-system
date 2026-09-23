@@ -32,9 +32,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql(connectionString)
-   .ConfigureWarnings(warnings =>
-       warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuted));
+    options.UseNpgsql(connectionString);
 });
 
 var app = builder.Build();
