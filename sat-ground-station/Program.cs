@@ -1,11 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using sat_ground_station.Controllers;
+using sat_ground_station.Network;
 using sat_ground_station.Repository;
 using sat_ground_station.Service;
 using System.Text.Json.Serialization;
 
 DotNetEnv.Env.Load();
 DotNetEnv.Env.TraversePath().Load();
+
+
+var connectionString = (string)Environment.GetEnvironmentVariable("SGS_POSTGRES_CONNECTION_STRING");
+var signaleRendpointKey = (string)Environment.GetEnvironmentVariable("SIGNALR_ENDPOINT_KEY");
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,17 +28,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<TelemetryService>();
 builder.Services.AddScoped<CheckSeverity>();
-builder.Services.AddHostedService<TcpRecieverService>();
+builder.Services.AddSignalR();
 
-var connectionString = (string) Environment.GetEnvironmentVariable("SGS_POSTGRES_CONNECTION_STRING");
-
-if (string.IsNullOrWhiteSpace(connectionString))
-{
-    Console.WriteLine("SGS_POSTGRES_CONNECTION_STRING is not set or empty. Skipping DbContext registration.");
-}
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-     options.UseNpgsql(connectionString);
+    options.UseNpgsql(connectionString)
+   .ConfigureWarnings(warnings =>
+       warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.CommandExecuted));
 });
 
 var app = builder.Build();
@@ -48,20 +50,7 @@ else
     //app.UseHttpsRedirection();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var provider = scope.ServiceProvider;
-    var db = provider.GetService<sat_ground_station.Repository.AppDbContext>();
-
-    if (db != null)
-    {
-        Console.WriteLine(db.Database.CanConnect());
-    }
-    else
-    {
-        Console.WriteLine("AppDbContext not registered because no connection string was provided.");
-    }
-}
+app.MapHub<SignalRServerHub>($"/simulationHub/{signaleRendpointKey}");
 
 app.UseAuthorization();
 
