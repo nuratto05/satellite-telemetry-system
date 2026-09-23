@@ -1,4 +1,4 @@
-﻿using sat_ground_station.Models;
+﻿using sat_ground_station.Models.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,7 +21,7 @@ public class Mission
     public string Description { get; set; }
 
     [Column("status")]
-    public Status? Status { get; set; } = Models.Status.Active;
+    public Status? Status { get; set; } = Enums.Status.Active;
 
     public ICollection<Satellite>? Satellites { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 
+namespace sat_sim.Models;
 public class Telemetry
 {
 	public int SatelliteId {  get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using sat_ground_station.Models;
+using sat_ground_station.Models.Enums;
 
 namespace sat_ground_station.Service;
 
