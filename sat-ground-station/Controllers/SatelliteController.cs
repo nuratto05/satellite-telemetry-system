@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using sat_ground_station.Models;
 using sat_ground_station.Models.Dto;
+using sat_ground_station.Models.Enums;
+using sat_ground_station.Network;
 using sat_ground_station.Repository;
+using sat_sim.Dto;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 /// <summary>
 /// Summary description for Class1
@@ -17,10 +22,12 @@ public class SatelliteController : ControllerBase
 {
 
     private readonly AppDbContext _dbContext;
+    private readonly IHubContext<SignalRServerHub> _hubContext;
 
-    public SatelliteController(AppDbContext dbContext)
+    public SatelliteController(AppDbContext dbContext, IHubContext<SignalRServerHub> hubContext)
     {
         _dbContext = dbContext;
+        _hubContext = hubContext;
     }
 
     [HttpGet]
@@ -63,6 +70,9 @@ public class SatelliteController : ControllerBase
         await _dbContext.Satellites.AddAsync(sat);
         await _dbContext.SaveChangesAsync();
 
+        SatelliteCommand? command = new SatelliteCommand(sat, Commands.Add);
+        await _hubContext.Clients.All.SendAsync("ModifySatellite", command);
+
         return Ok(sat);
     }
 
@@ -76,13 +86,50 @@ public class SatelliteController : ControllerBase
             return NotFound();
         }
 
-        if (updatedSatellite.Status != null){
-            satellite.Status = updatedSatellite.Status.Value;
+        if (updatedSatellite == null)
+        {
+            return BadRequest("Update data is required");
+        }
+
+        if (satellite.Status == Status.Decommissioned)
+        {
+            return BadRequest("Satellite is Decommissioned");
+        }
+
+        Status status = Status.Active;
+
+        if (updatedSatellite.Command != null){
+
+            if(updatedSatellite.Command == Commands.Activate || updatedSatellite.Command == Commands.Add)
+            {
+                status = Status.Active;
+            }
+            else if(updatedSatellite.Command == Commands.Deactivate)
+            {
+                status = Status.Inactive;
+            }
+            else if(updatedSatellite.Command == Commands.Delete)
+            {
+                status = Status.Decommissioned;
+            }
         }
 
         if (updatedSatellite.MissionId != null)
         {
             satellite.MissionId = updatedSatellite.MissionId.Value;
+        }
+
+        if (satellite.Status == status)
+        {
+            return Ok(satellite);
+        }
+
+        satellite.Status = status;
+
+        if (updatedSatellite.Command != null)
+        {
+            SatelliteCommand? command = new SatelliteCommand(satellite, updatedSatellite.Command.Value);
+            await _hubContext.Clients.All.SendAsync("ModifySatellite", command);
         }
 
         await _dbContext.SaveChangesAsync();

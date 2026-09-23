@@ -1,15 +1,17 @@
 ﻿using System;
 
+namespace sat_sim.Models;
 public class Satellite
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+
+    public Status Status { get; set; }
 
     public Satellite() { }
 
-    public Satellite(int id, string name)
+    public Satellite(int id, Status status)
     {
         this.Id = id;
-        this.Name = name;
-    } 
+        Status = status;
+    }
 }

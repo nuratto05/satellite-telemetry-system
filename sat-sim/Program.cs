@@ -1,55 +1,106 @@
-﻿using sat_sim.Network;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
+using sat_ground_station.Models.Enums;
+using sat_sim.Dto;
+using sat_sim.Models;
 using System.Net;
 using System.Reflection;
+using System.Reflection.Emit;
 
 DotNetEnv.Env.Load();
 DotNetEnv.Env.TraversePath().Load();
 
-List<Satellite> satellites = new List<Satellite>
+var signaleRendpointKey = (string)Environment.GetEnvironmentVariable("SIGNALR_ENDPOINT_KEY");
+
+Dictionary<int, Satellite> satellites = new Dictionary<int, Satellite>
 {
-    new Satellite(1, "SAT-001-Explorer"),
-    new Satellite(2, "SAT-002-Explorer"),
-    new Satellite(3, "SAT-003-Weather"),
-    new Satellite(4, "SAT-004-Weather"),
-    new Satellite(5, "SAT-005-Communication"),
-    new Satellite(6, "SAT-006-Communication"),
-    new Satellite(7, "SAT-007-Navigation"),
-    new Satellite(8, "SAT-008-Navigation"),
-    new Satellite(9, "SAT-009-Science"),
-    new Satellite(10, "SAT-010-Science"),
-    new Satellite(11, "SAT-011-Imaging"),
-    new Satellite(12, "SAT-012-Imaging"),
-    new Satellite(13, "SAT-013-Tracking"),
-    new Satellite(14, "SAT-014-Tracking"),
-    new Satellite(15, "SAT-015-Research"),
-    new Satellite(16, "SAT-016-Research"),
-    new Satellite(17, "SAT-017-Defense"),
-    new Satellite(18, "SAT-018-Defense"),
-    new Satellite(19, "SAT-019-Technology"),
-    new Satellite(20, "SAT-020-Technology")
+    { 1, new Satellite(1, Status.Active) },
+    { 2, new Satellite(2, Status.Inactive) },
+    { 3, new Satellite(3, Status.Inactive) },
+    { 4, new Satellite(4, Status.Inactive) },
+    { 5, new Satellite(5, Status.Inactive) },
+    { 6, new Satellite(6, Status.Inactive) },
+    { 7, new Satellite(7, Status.Inactive) },
+    { 8, new Satellite(8, Status.Inactive) },
+    { 9, new Satellite(9, Status.Inactive) },
+    { 10, new Satellite(10, Status.Inactive) },
+    { 11, new Satellite(11, Status.Inactive) },
+    { 12, new Satellite(12, Status.Inactive) },
+    { 13, new Satellite(13, Status.Inactive) },
+    { 14, new Satellite(14, Status.Inactive) },
+    { 15, new Satellite(15, Status.Inactive) },
+    { 16, new Satellite(16, Status.Inactive) },
+    { 17, new Satellite(17, Status.Inactive) },
+    { 18, new Satellite(18, Status.Inactive) },
+    { 19, new Satellite(19, Status.Inactive) },
+    { 20, new Satellite(20, Status.Inactive) },
+    { 21, new Satellite(21, Status.Inactive) },
+    { 22, new Satellite(22, Status.Inactive) },
+    { 23, new Satellite(23, Status.Inactive) },
 };
 
 
 TelemetryGenerator generator = new TelemetryGenerator();
 
-int port = int.Parse(Environment.GetEnvironmentVariable("PORT"));
-string ip = Environment.GetEnvironmentVariable("IP_ADDRESS");
+var connection = new HubConnectionBuilder()
+    .WithUrl($"http://localhost:5142/simulationHub/{signaleRendpointKey}")
+    .WithAutomaticReconnect()
+    .Build();
 
-TcpNetwork network = new TcpNetwork(ip, port);
+connection.On<SatelliteCommand>( "ModifySatellite", command =>
+    {
+
+        switch (command.Action)
+        {
+            case Commands.Activate:
+            if (satellites.TryGetValue(command.Satellite.Id, out Satellite satActive))
+                {
+                    satActive.Status = Status.Active;
+                }
+                Console.WriteLine($"Activate satellite: {command.Satellite.Id}");
+                break;
+
+            case Commands.Deactivate:
+                if (satellites.TryGetValue(command.Satellite.Id, out Satellite satDeactivate))
+                {
+                    satDeactivate.Status = Status.Inactive;
+                }
+                Console.WriteLine($"Deactivate satellite: {command.Satellite.Id}");
+                break;
+
+            case Commands.Delete:
+                satellites.Remove(command.Satellite.Id);
+                Console.WriteLine($"Deleted satellite: {command.Satellite.Id}");
+                break;
+
+            case Commands.Add:
+                satellites[command.Satellite.Id] = command.Satellite;
+                Console.WriteLine($"Added satellite: {command.Satellite.Id}");
+                break;
+        }
+    }
+);
+
+await connection.StartAsync();
+Console.WriteLine("Connected to backend.");
 
 while (true)
 {
 
     Console.WriteLine("--------------------------------------------------------");
-    foreach (Satellite sat in satellites)
+    int activeSatellites = 0;
+    foreach (Satellite sat in satellites.Values)
     {
-        Telemetry telemetry = generator.generate(sat);
+        if(sat.Status == Status.Active)
+        {
+            activeSatellites++;
+            Telemetry telemetry = generator.generate(sat);
+            await connection.InvokeAsync("SendTelemetry", telemetry);
+        }
 
-        network.SendTelemetry(telemetry);
     }
+    Console.WriteLine($"Data Points Sent {activeSatellites}");
     Console.WriteLine("--------------------------------------------------------");
 
     Thread.Sleep(5000);
 }
-
-Console.ReadLine();
