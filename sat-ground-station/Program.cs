@@ -15,18 +15,6 @@ var signaleRendpointKey = (string)Environment.GetEnvironmentVariable("SIGNALR_EN
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("Frontend", policy =>
-    {
-        policy
-            .WithOrigins("http://localhost:5173") // your frontend's exact origin
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials(); // needed for SignalR
-    });
-});
-
 // Add services to the container.
 
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -59,8 +47,6 @@ else
 {
     //app.UseHttpsRedirection();
 }
-
-app.UseCors("Frontend");
 
 app.MapHub<SignalRServerHub>($"/simulationHub/{signaleRendpointKey}");
 
