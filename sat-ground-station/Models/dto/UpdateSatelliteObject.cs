@@ -6,6 +6,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace sat_ground_station.Models.Dto;
 public class UpdateSatelliteObject
 {
-    public Commands? Command { get; set; }
-    public int? MissionId { get; set; }
+    public Commands? Command { get;}
+    public int? MissionId { get;}
 }
