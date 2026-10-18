@@ -3,9 +3,9 @@ using System;
 
 public class TelemetryGenerator
 {
-	Random random = new Random();
+    private readonly Random random = new Random();
 
-    Dictionary<Satellite, Telemetry> telemetryMap;
+    private readonly Dictionary<Satellite, Telemetry> telemetryMap;
     private readonly Dictionary<Satellite, double> orbitAngles;
 
     public TelemetryGenerator()
@@ -57,7 +57,7 @@ public class TelemetryGenerator
             int newAltitude = prevTel.Altitude + random.Next(-2, 3);
             int newVelocity = prevTel.Velocity + random.Next(-50, 51);
             int newTemperature = prevTel.Temperature + random.Next(-2, 3);
-            int newBatteryLevel = prevTel.BatteryLevel + random.Next(-1, 1);
+            int newBatteryLevel = prevTel.BatteryLevel + random.Next(-1, 2);
 
             //Keep within range
             newAltitude = Math.Clamp(newAltitude, 480, 520);

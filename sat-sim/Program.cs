@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
-using sat_ground_station.Models.Enums;
+using sat_sim.Models.Enums;
 using sat_sim.Dto;
 using sat_sim.Models;
 using System.Net;
@@ -55,7 +55,7 @@ connection.On<SatelliteCommand>( "ModifySatellite", command =>
             case Commands.Activate:
             if (satellites.TryGetValue(command.Satellite.Id, out Satellite satActive))
                 {
-                    satActive.Status = Status.Active;
+                    satActive.Activate();
                 }
                 Console.WriteLine($"Activate satellite: {command.Satellite.Id}");
                 break;
@@ -63,7 +63,7 @@ connection.On<SatelliteCommand>( "ModifySatellite", command =>
             case Commands.Deactivate:
                 if (satellites.TryGetValue(command.Satellite.Id, out Satellite satDeactivate))
                 {
-                    satDeactivate.Status = Status.Inactive;
+                    satDeactivate.Deactivate();
                 }
                 Console.WriteLine($"Deactivate satellite: {command.Satellite.Id}");
                 break;

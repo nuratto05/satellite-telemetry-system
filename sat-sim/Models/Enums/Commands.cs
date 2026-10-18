@@ -1,4 +1,4 @@
-﻿namespace sat_ground_station.Models.Enums;
+﻿namespace sat_sim.Models.Enums;
 
 public enum Commands
 {

@@ -1,4 +1,4 @@
-﻿using sat_ground_station.Models.Enums;
+﻿using sat_sim.Models.Enums;
 using sat_sim.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,6 @@ namespace sat_sim.Dto;
 
 public class SatelliteCommand
 {
-    public Satellite Satellite { get; set; }
-    public Commands Action { get; set; }
+    public Satellite Satellite { get;}
+    public Commands Action { get;}
 }

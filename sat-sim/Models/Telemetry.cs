@@ -3,14 +3,14 @@
 namespace sat_sim.Models;
 public class Telemetry
 {
-	public int SatelliteId {  get; set; }
-	public DateTime Timestamp { get; set; }
-	public double Longitude { get; set; }
-	public double Latitude { get; set; }
-	public int Altitude { get; set; }
-	public int Velocity { get; set; }
-	public int Temperature { get; set; }
-	public int BatteryLevel { get; set; }
+	public int SatelliteId {  get; private set; }
+    public DateTime Timestamp { get; private set; }
+    public double Longitude { get; private set; }
+    public double Latitude { get; private set; }
+    public int Altitude { get; private set; }
+    public int Velocity { get; private set; }
+    public int Temperature { get; private set; }
+    public int BatteryLevel { get; private set; }
 
 	public Telemetry() { }
 

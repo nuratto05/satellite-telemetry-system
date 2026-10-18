@@ -1,6 +1,5 @@
-﻿using System;
+﻿namespace sat_sim.Models.Enums;
 
-namespace sat_sim.Models;
 public enum Status
 {
 	Active,
