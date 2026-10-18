@@ -1,6 +1,7 @@
 ﻿using sat_sim.Models;
 using System;
 
+namespace sat_sim.Services;
 public class TelemetryGenerator
 {
     private readonly Random random = new Random();

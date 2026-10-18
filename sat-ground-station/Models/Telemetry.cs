@@ -13,34 +13,48 @@ public class Telemetry
 
     [Required]
     [Column("satalliteId")]
-	public int SatelliteId {  get; set; }
+	public int SatelliteId {  get; private set; }
 
-	[Required]
+    [Required]
     [Column("timestamp")]
-    public DateTime Timestamp { get; set; }
+    public DateTime Timestamp { get; private set; }
 
     [Required]
     [Column("longitude")]
-    public double Longitude { get; set; }
+    public double Longitude { get; private set; }
 
     [Required]
     [Column("latitude")]
-    public double Latitude { get; set; }
+    public double Latitude { get; private set; }
 
     [Required]
     [Column("altitude")]
-    public int Altitude { get; set; }
+    public int Altitude { get; private set; }
 
     [Required]
     [Column("velocity")]
-    public int Velocity { get; set; }
+    public int Velocity { get; private set; }
 
     [Required]
     [Column("temperature")]
-    public int Temperature { get; set; }
+    public int Temperature { get; private set; }
 
     [Required]
     [Column("batteryLevel")]
-    public int BatteryLevel { get; set; }
+    public int BatteryLevel { get; private set; }
+
+    public Telemetry() { }
+
+    public Telemetry(int satelliteId, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
+    {
+        this.SatelliteId = satelliteId;
+        this.Timestamp = timestamp;
+        this.Longitude = longitude;
+        this.Latitude = latitude;
+        this.Altitude = altitude;
+        this.Velocity = velocity;
+        this.Temperature = temperture;
+        this.BatteryLevel = batteryLevel;
+    }
 
 }
