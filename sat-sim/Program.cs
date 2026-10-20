@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using sat_sim.Models.Enums;
 using sat_sim.Dto;
 using sat_sim.Models;
+using sat_sim.Services;
 using System.Net;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -95,7 +96,8 @@ while (true)
         {
             activeSatellites++;
             Telemetry telemetry = generator.generate(sat);
-            await connection.InvokeAsync("SendTelemetry", telemetry);
+            byte[] packet = PacketEncoder.EncodeTelemetry(telemetry);
+            await connection.InvokeAsync("SendPacket", packet);
         }
 
     }
