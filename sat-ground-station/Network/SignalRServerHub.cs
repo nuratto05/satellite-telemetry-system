@@ -27,7 +27,7 @@ public class SignalRServerHub : Hub
         await base.OnDisconnectedAsync(exception);
     }
 
-    // Backend can call this through the client
+    
     public async Task SendTelemetry(Telemetry telemetry)
     {
         Console.WriteLine($"Satellite {telemetry.SatelliteId}: {telemetry.Latitude}, {telemetry.Longitude}");
@@ -42,6 +42,20 @@ public class SignalRServerHub : Hub
             Console.WriteLine("Invalid telemetry.");
             return;
         }
+
+        await using var scope = _provider.CreateAsyncScope();
+        var telemetryService = scope.ServiceProvider.GetRequiredService<TelemetryService>();
+
+        await telemetryService.SaveTelemetry(telemetry);
+        Console.WriteLine("--------------------------------------------------------");
+    }
+
+    
+    public async Task SendPacket(byte[] packet)
+    {
+        Console.WriteLine($"Packet Recived");
+
+        Telemetry telemetry = PacketDecoder.Decode(packet);
 
         await using var scope = _provider.CreateAsyncScope();
         var telemetryService = scope.ServiceProvider.GetRequiredService<TelemetryService>();
