@@ -35,6 +35,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +56,7 @@ else
 {
     //app.UseHttpsRedirection();
 }
+app.UseCors();
 
 app.MapHub<SignalRServerHub>($"/simulationHub/{signaleRendpointKey}");
 

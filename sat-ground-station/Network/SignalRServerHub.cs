@@ -26,30 +26,6 @@ public class SignalRServerHub : Hub
 
         await base.OnDisconnectedAsync(exception);
     }
-
-    
-    public async Task SendTelemetry(Telemetry telemetry)
-    {
-        Console.WriteLine($"Satellite {telemetry.SatelliteId}: {telemetry.Latitude}, {telemetry.Longitude}");
-
-        // Do something with the telemetry...
-
-        Console.WriteLine("--------------------------------------------------------");
-        Console.WriteLine($"Data Received");
-
-        if (telemetry == null)
-        {
-            Console.WriteLine("Invalid telemetry.");
-            return;
-        }
-
-        await using var scope = _provider.CreateAsyncScope();
-        var telemetryService = scope.ServiceProvider.GetRequiredService<TelemetryService>();
-
-        await telemetryService.SaveTelemetry(telemetry);
-        Console.WriteLine("--------------------------------------------------------");
-    }
-
     
     public async Task SendPacket(byte[] packet)
     {
