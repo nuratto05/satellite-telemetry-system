@@ -44,6 +44,12 @@ builder.Services.AddCors(options =>
               .AllowCredentials());
 });
 
+builder.Services.AddSignalR()
+    .AddJsonProtocol(options =>
+    {
+        options.PayloadSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

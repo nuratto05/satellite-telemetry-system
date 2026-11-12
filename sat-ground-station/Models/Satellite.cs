@@ -15,7 +15,11 @@ public class Satellite
 
     [Required]
     [Column("satelliteId")]
-    public string SatelliteId { get; set; }
+    public long SatelliteId { get; set; }
+
+    [Required]
+    [Column("satelliteName")]
+    public string SatelliteName { get; set; }
 
     [Column("status")]
     public Status? Status { get; set; } = Enums.Status.Active;

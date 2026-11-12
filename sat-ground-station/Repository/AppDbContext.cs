@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sat_ground_station.Models;
+using sat_ground_station.Models.Enums;
 using System;
 using System.Xml.Linq;
 
@@ -48,6 +49,12 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Alert>()
             .Property(a => a.TemperatureLevel)
             .HasConversion<string>();
+        modelBuilder.Entity<Alert>()
+            .Property(a => a.SeverityTypes)
+            .HasConversion(
+                v => v.Select(x => x.ToString()).ToArray(),
+                v => v.Select(x => Enum.Parse<SeverityTypes>(x)).ToList()
+            );
 
         //SEED DATA
 
@@ -65,27 +72,27 @@ public class AppDbContext : DbContext
         );
 
         modelBuilder.Entity<Satellite>().HasData(
-        new Satellite { Id = 1, SatelliteId = "SAT-001-Explorer", MissionId = 1, Country = "US" },
-        new Satellite { Id = 2, SatelliteId = "SAT-002-Explorer", MissionId = 1, Country = "US" },
-        new Satellite { Id = 3, SatelliteId = "SAT-003-Weather", MissionId = 2, Country = "US" },
-        new Satellite { Id = 4, SatelliteId = "SAT-004-Weather", MissionId = 2, Country = "US" },
-        new Satellite { Id = 5, SatelliteId = "SAT-005-Communication", MissionId = 3, Country = "US" },
-        new Satellite { Id = 6, SatelliteId = "SAT-006-Communication", MissionId = 3, Country = "US" },
-        new Satellite { Id = 7, SatelliteId = "SAT-007-Navigation", MissionId = 4, Country = "US" },
-        new Satellite { Id = 8, SatelliteId = "SAT-008-Navigation", MissionId = 4, Country = "US" },
-        new Satellite { Id = 9, SatelliteId = "SAT-009-Science", MissionId = 5, Country = "US" },
-        new Satellite { Id = 10, SatelliteId = "SAT-010-Science", MissionId = 5, Country = "US" },
-        new Satellite { Id = 11, SatelliteId = "SAT-011-Imaging", MissionId = 6, Country = "US" },
-        new Satellite { Id = 12, SatelliteId = "SAT-012-Imaging", MissionId = 6, Country = "US" },
-        new Satellite { Id = 13, SatelliteId = "SAT-013-Tracking", MissionId = 7, Country = "US" },
-        new Satellite { Id = 14, SatelliteId = "SAT-014-Tracking", MissionId = 7, Country = "US" },
-        new Satellite { Id = 15, SatelliteId = "SAT-015-Research", MissionId = 8, Country = "US" },
-        new Satellite { Id = 16, SatelliteId = "SAT-016-Research", MissionId = 8, Country = "US" },
-        new Satellite { Id = 17, SatelliteId = "SAT-017-Defense", MissionId = 9, Country = "US" },
-        new Satellite { Id = 18, SatelliteId = "SAT-018-Defense", MissionId = 9, Country = "US" },
-        new Satellite { Id = 19, SatelliteId = "SAT-019-Technology", MissionId = 10, Country = "US" },
-        new Satellite { Id = 20, SatelliteId = "SAT-020-Technology", MissionId = 10, Country = "US" }
-    );
+            new Satellite { Id = 1, SatelliteId = 7854376908376L, SatelliteName = "SAT-100-EXPLORER", MissionId = 1, Country = "US" },
+            new Satellite { Id = 2, SatelliteId = 7854376908377L, SatelliteName = "SAT-101-EXPLORER", MissionId = 1, Country = "US" },
+            new Satellite { Id = 3, SatelliteId = 7854376908378L, SatelliteName = "SAT-102-WEATHER", MissionId = 2, Country = "US" },
+            new Satellite { Id = 4, SatelliteId = 7854376908379L, SatelliteName = "SAT-103-WEATHER", MissionId = 2, Country = "US" },
+            new Satellite { Id = 5, SatelliteId = 7854376908380L, SatelliteName = "SAT-104-COMMUNICATION", MissionId = 3, Country = "US" },
+            new Satellite { Id = 6, SatelliteId = 7854376908381L, SatelliteName = "SAT-105-COMMUNICATION", MissionId = 3, Country = "US" },
+            new Satellite { Id = 7, SatelliteId = 7854376908382L, SatelliteName = "SAT-106-NAVIGATION", MissionId = 4, Country = "US" },
+            new Satellite { Id = 8, SatelliteId = 7854376908383L, SatelliteName = "SAT-107-NAVIGATION", MissionId = 4, Country = "US" },
+            new Satellite { Id = 9, SatelliteId = 7854376908384L, SatelliteName = "SAT-108-SCIENCE", MissionId = 5, Country = "US" },
+            new Satellite { Id = 10, SatelliteId = 7854376908385L, SatelliteName = "SAT-109-SCIENCE", MissionId = 5, Country = "US" },
+            new Satellite { Id = 11, SatelliteId = 7854376908386L, SatelliteName = "SAT-110-IMAGING", MissionId = 6, Country = "US" },
+            new Satellite { Id = 12, SatelliteId = 7854376908387L, SatelliteName = "SAT-111-IMAGING", MissionId = 6, Country = "US" },
+            new Satellite { Id = 13, SatelliteId = 7854376908388L, SatelliteName = "SAT-112-TRACKING", MissionId = 7, Country = "US" },
+            new Satellite { Id = 14, SatelliteId = 7854376908389L, SatelliteName = "SAT-113-TRACKING", MissionId = 7, Country = "US" },
+            new Satellite { Id = 15, SatelliteId = 7854376908390L, SatelliteName = "SAT-114-RESEARCH", MissionId = 8, Country = "US" },
+            new Satellite { Id = 16, SatelliteId = 7854376908391L, SatelliteName = "SAT-115-RESEARCH", MissionId = 8, Country = "US" },
+            new Satellite { Id = 17, SatelliteId = 7854376908392L, SatelliteName = "SAT-116-DEFENSE", MissionId = 9, Country = "US" },
+            new Satellite { Id = 18, SatelliteId = 7854376908393L, SatelliteName = "SAT-117-DEFENSE", MissionId = 9, Country = "US" },
+            new Satellite { Id = 19, SatelliteId = 7854376908394L, SatelliteName = "SAT-118-TECHNOLOGY", MissionId = 10, Country = "US" },
+            new Satellite { Id = 20, SatelliteId = 7854376908395L, SatelliteName = "SAT-119-TECHNOLOGY", MissionId = 10, Country = "US" }
+        );
     }
 
 }

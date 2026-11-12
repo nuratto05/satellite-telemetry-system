@@ -39,10 +39,20 @@ namespace sat_ground_station.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("satelliteId");
 
+                    b.Property<string>("SatelliteName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("satelliteName");
+
                     b.Property<string>("Severity")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("severity");
+
+                    b.Property<string[]>("SeverityTypes")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("type");
 
                     b.Property<string>("TemperatureLevel")
                         .HasColumnType("text")
@@ -179,10 +189,14 @@ namespace sat_ground_station.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("missionId");
 
-                    b.Property<string>("SatelliteId")
+                    b.Property<long>("SatelliteId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("satelliteId");
+
+                    b.Property<string>("SatelliteName")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("satelliteId");
+                        .HasColumnName("satelliteName");
 
                     b.Property<string>("Status")
                         .HasColumnType("text")
@@ -200,7 +214,8 @@ namespace sat_ground_station.Migrations
                             Id = 1,
                             Country = "US",
                             MissionId = 1,
-                            SatelliteId = "SAT-001-Explorer",
+                            SatelliteId = 7854376908376L,
+                            SatelliteName = "SAT-100-EXPLORER",
                             Status = "Active"
                         },
                         new
@@ -208,7 +223,8 @@ namespace sat_ground_station.Migrations
                             Id = 2,
                             Country = "US",
                             MissionId = 1,
-                            SatelliteId = "SAT-002-Explorer",
+                            SatelliteId = 7854376908377L,
+                            SatelliteName = "SAT-101-EXPLORER",
                             Status = "Active"
                         },
                         new
@@ -216,7 +232,8 @@ namespace sat_ground_station.Migrations
                             Id = 3,
                             Country = "US",
                             MissionId = 2,
-                            SatelliteId = "SAT-003-Weather",
+                            SatelliteId = 7854376908378L,
+                            SatelliteName = "SAT-102-WEATHER",
                             Status = "Active"
                         },
                         new
@@ -224,7 +241,8 @@ namespace sat_ground_station.Migrations
                             Id = 4,
                             Country = "US",
                             MissionId = 2,
-                            SatelliteId = "SAT-004-Weather",
+                            SatelliteId = 7854376908379L,
+                            SatelliteName = "SAT-103-WEATHER",
                             Status = "Active"
                         },
                         new
@@ -232,7 +250,8 @@ namespace sat_ground_station.Migrations
                             Id = 5,
                             Country = "US",
                             MissionId = 3,
-                            SatelliteId = "SAT-005-Communication",
+                            SatelliteId = 7854376908380L,
+                            SatelliteName = "SAT-104-COMMUNICATION",
                             Status = "Active"
                         },
                         new
@@ -240,7 +259,8 @@ namespace sat_ground_station.Migrations
                             Id = 6,
                             Country = "US",
                             MissionId = 3,
-                            SatelliteId = "SAT-006-Communication",
+                            SatelliteId = 7854376908381L,
+                            SatelliteName = "SAT-105-COMMUNICATION",
                             Status = "Active"
                         },
                         new
@@ -248,7 +268,8 @@ namespace sat_ground_station.Migrations
                             Id = 7,
                             Country = "US",
                             MissionId = 4,
-                            SatelliteId = "SAT-007-Navigation",
+                            SatelliteId = 7854376908382L,
+                            SatelliteName = "SAT-106-NAVIGATION",
                             Status = "Active"
                         },
                         new
@@ -256,7 +277,8 @@ namespace sat_ground_station.Migrations
                             Id = 8,
                             Country = "US",
                             MissionId = 4,
-                            SatelliteId = "SAT-008-Navigation",
+                            SatelliteId = 7854376908383L,
+                            SatelliteName = "SAT-107-NAVIGATION",
                             Status = "Active"
                         },
                         new
@@ -264,7 +286,8 @@ namespace sat_ground_station.Migrations
                             Id = 9,
                             Country = "US",
                             MissionId = 5,
-                            SatelliteId = "SAT-009-Science",
+                            SatelliteId = 7854376908384L,
+                            SatelliteName = "SAT-108-SCIENCE",
                             Status = "Active"
                         },
                         new
@@ -272,7 +295,8 @@ namespace sat_ground_station.Migrations
                             Id = 10,
                             Country = "US",
                             MissionId = 5,
-                            SatelliteId = "SAT-010-Science",
+                            SatelliteId = 7854376908385L,
+                            SatelliteName = "SAT-109-SCIENCE",
                             Status = "Active"
                         },
                         new
@@ -280,7 +304,8 @@ namespace sat_ground_station.Migrations
                             Id = 11,
                             Country = "US",
                             MissionId = 6,
-                            SatelliteId = "SAT-011-Imaging",
+                            SatelliteId = 7854376908386L,
+                            SatelliteName = "SAT-110-IMAGING",
                             Status = "Active"
                         },
                         new
@@ -288,7 +313,8 @@ namespace sat_ground_station.Migrations
                             Id = 12,
                             Country = "US",
                             MissionId = 6,
-                            SatelliteId = "SAT-012-Imaging",
+                            SatelliteId = 7854376908387L,
+                            SatelliteName = "SAT-111-IMAGING",
                             Status = "Active"
                         },
                         new
@@ -296,7 +322,8 @@ namespace sat_ground_station.Migrations
                             Id = 13,
                             Country = "US",
                             MissionId = 7,
-                            SatelliteId = "SAT-013-Tracking",
+                            SatelliteId = 7854376908388L,
+                            SatelliteName = "SAT-112-TRACKING",
                             Status = "Active"
                         },
                         new
@@ -304,7 +331,8 @@ namespace sat_ground_station.Migrations
                             Id = 14,
                             Country = "US",
                             MissionId = 7,
-                            SatelliteId = "SAT-014-Tracking",
+                            SatelliteId = 7854376908389L,
+                            SatelliteName = "SAT-113-TRACKING",
                             Status = "Active"
                         },
                         new
@@ -312,7 +340,8 @@ namespace sat_ground_station.Migrations
                             Id = 15,
                             Country = "US",
                             MissionId = 8,
-                            SatelliteId = "SAT-015-Research",
+                            SatelliteId = 7854376908390L,
+                            SatelliteName = "SAT-114-RESEARCH",
                             Status = "Active"
                         },
                         new
@@ -320,7 +349,8 @@ namespace sat_ground_station.Migrations
                             Id = 16,
                             Country = "US",
                             MissionId = 8,
-                            SatelliteId = "SAT-016-Research",
+                            SatelliteId = 7854376908391L,
+                            SatelliteName = "SAT-115-RESEARCH",
                             Status = "Active"
                         },
                         new
@@ -328,7 +358,8 @@ namespace sat_ground_station.Migrations
                             Id = 17,
                             Country = "US",
                             MissionId = 9,
-                            SatelliteId = "SAT-017-Defense",
+                            SatelliteId = 7854376908392L,
+                            SatelliteName = "SAT-116-DEFENSE",
                             Status = "Active"
                         },
                         new
@@ -336,7 +367,8 @@ namespace sat_ground_station.Migrations
                             Id = 18,
                             Country = "US",
                             MissionId = 9,
-                            SatelliteId = "SAT-018-Defense",
+                            SatelliteId = 7854376908393L,
+                            SatelliteName = "SAT-117-DEFENSE",
                             Status = "Active"
                         },
                         new
@@ -344,7 +376,8 @@ namespace sat_ground_station.Migrations
                             Id = 19,
                             Country = "US",
                             MissionId = 10,
-                            SatelliteId = "SAT-019-Technology",
+                            SatelliteId = 7854376908394L,
+                            SatelliteName = "SAT-118-TECHNOLOGY",
                             Status = "Active"
                         },
                         new
@@ -352,7 +385,8 @@ namespace sat_ground_station.Migrations
                             Id = 20,
                             Country = "US",
                             MissionId = 10,
-                            SatelliteId = "SAT-020-Technology",
+                            SatelliteId = 7854376908395L,
+                            SatelliteName = "SAT-119-TECHNOLOGY",
                             Status = "Active"
                         });
                 });
@@ -382,9 +416,14 @@ namespace sat_ground_station.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("longitude");
 
-                    b.Property<int>("SatelliteId")
-                        .HasColumnType("integer")
+                    b.Property<long>("SatelliteId")
+                        .HasColumnType("bigint")
                         .HasColumnName("satalliteId");
+
+                    b.Property<string>("SatelliteName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("satalliteName");
 
                     b.Property<int>("Temperature")
                         .HasColumnType("integer")

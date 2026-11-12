@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace sat_ground_station.Migrations
 {
     /// <inheritdoc />
-    public partial class Add_Tables : Migration
+    public partial class createdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,11 +21,13 @@ namespace sat_ground_station.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     satelliteId = table.Column<int>(type: "integer", nullable: false),
+                    satelliteName = table.Column<string>(type: "text", nullable: false),
                     timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     severity = table.Column<string>(type: "text", nullable: false),
                     velocityLevel = table.Column<string>(type: "text", nullable: true),
                     temperatureLevel = table.Column<string>(type: "text", nullable: true),
-                    batteryLevel = table.Column<string>(type: "text", nullable: true)
+                    batteryLevel = table.Column<string>(type: "text", nullable: true),
+                    type = table.Column<string[]>(type: "text[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +55,8 @@ namespace sat_ground_station.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    satalliteId = table.Column<int>(type: "integer", nullable: false),
+                    satalliteId = table.Column<long>(type: "bigint", nullable: false),
+                    satalliteName = table.Column<string>(type: "text", nullable: false),
                     timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     longitude = table.Column<double>(type: "double precision", nullable: false),
                     latitude = table.Column<double>(type: "double precision", nullable: false),
@@ -73,7 +76,8 @@ namespace sat_ground_station.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    satelliteId = table.Column<string>(type: "text", nullable: false),
+                    satelliteId = table.Column<long>(type: "bigint", nullable: false),
+                    satelliteName = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<string>(type: "text", nullable: true),
                     missionId = table.Column<int>(type: "integer", nullable: false),
                     Country = table.Column<string>(type: "text", nullable: false)
@@ -108,29 +112,29 @@ namespace sat_ground_station.Migrations
 
             migrationBuilder.InsertData(
                 table: "Satellite",
-                columns: new[] { "id", "Country", "missionId", "satelliteId", "status" },
+                columns: new[] { "id", "Country", "missionId", "satelliteId", "satelliteName", "status" },
                 values: new object[,]
                 {
-                    { 1, "US", 1, "SAT-001-Explorer", "Active" },
-                    { 2, "US", 1, "SAT-002-Explorer", "Active" },
-                    { 3, "US", 2, "SAT-003-Weather", "Active" },
-                    { 4, "US", 2, "SAT-004-Weather", "Active" },
-                    { 5, "US", 3, "SAT-005-Communication", "Active" },
-                    { 6, "US", 3, "SAT-006-Communication", "Active" },
-                    { 7, "US", 4, "SAT-007-Navigation", "Active" },
-                    { 8, "US", 4, "SAT-008-Navigation", "Active" },
-                    { 9, "US", 5, "SAT-009-Science", "Active" },
-                    { 10, "US", 5, "SAT-010-Science", "Active" },
-                    { 11, "US", 6, "SAT-011-Imaging", "Active" },
-                    { 12, "US", 6, "SAT-012-Imaging", "Active" },
-                    { 13, "US", 7, "SAT-013-Tracking", "Active" },
-                    { 14, "US", 7, "SAT-014-Tracking", "Active" },
-                    { 15, "US", 8, "SAT-015-Research", "Active" },
-                    { 16, "US", 8, "SAT-016-Research", "Active" },
-                    { 17, "US", 9, "SAT-017-Defense", "Active" },
-                    { 18, "US", 9, "SAT-018-Defense", "Active" },
-                    { 19, "US", 10, "SAT-019-Technology", "Active" },
-                    { 20, "US", 10, "SAT-020-Technology", "Active" }
+                    { 1, "US", 1, 7854376908376L, "SAT-100-EXPLORER", "Active" },
+                    { 2, "US", 1, 7854376908377L, "SAT-101-EXPLORER", "Active" },
+                    { 3, "US", 2, 7854376908378L, "SAT-102-WEATHER", "Active" },
+                    { 4, "US", 2, 7854376908379L, "SAT-103-WEATHER", "Active" },
+                    { 5, "US", 3, 7854376908380L, "SAT-104-COMMUNICATION", "Active" },
+                    { 6, "US", 3, 7854376908381L, "SAT-105-COMMUNICATION", "Active" },
+                    { 7, "US", 4, 7854376908382L, "SAT-106-NAVIGATION", "Active" },
+                    { 8, "US", 4, 7854376908383L, "SAT-107-NAVIGATION", "Active" },
+                    { 9, "US", 5, 7854376908384L, "SAT-108-SCIENCE", "Active" },
+                    { 10, "US", 5, 7854376908385L, "SAT-109-SCIENCE", "Active" },
+                    { 11, "US", 6, 7854376908386L, "SAT-110-IMAGING", "Active" },
+                    { 12, "US", 6, 7854376908387L, "SAT-111-IMAGING", "Active" },
+                    { 13, "US", 7, 7854376908388L, "SAT-112-TRACKING", "Active" },
+                    { 14, "US", 7, 7854376908389L, "SAT-113-TRACKING", "Active" },
+                    { 15, "US", 8, 7854376908390L, "SAT-114-RESEARCH", "Active" },
+                    { 16, "US", 8, 7854376908391L, "SAT-115-RESEARCH", "Active" },
+                    { 17, "US", 9, 7854376908392L, "SAT-116-DEFENSE", "Active" },
+                    { 18, "US", 9, 7854376908393L, "SAT-117-DEFENSE", "Active" },
+                    { 19, "US", 10, 7854376908394L, "SAT-118-TECHNOLOGY", "Active" },
+                    { 20, "US", 10, 7854376908395L, "SAT-119-TECHNOLOGY", "Active" }
                 });
 
             migrationBuilder.CreateIndex(

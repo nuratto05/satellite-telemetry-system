@@ -17,6 +17,10 @@ public class Alert
     public int SatelliteId { get; set; }
 
     [Required]
+    [Column("satelliteName")]
+    public string SatelliteName { get; set; }
+
+    [Required]
     [Column("timestamp")]
     public DateTime Timestamp { get; set; }
 
@@ -32,5 +36,8 @@ public class Alert
 
     [Column("batteryLevel")]
     public SeverityStatus? BatteryLevel { get; set; } = SeverityStatus.Moderate;
+
+    [Column("type")]
+    public List<SeverityTypes> SeverityTypes { get; set; } = new();
 
 } 
