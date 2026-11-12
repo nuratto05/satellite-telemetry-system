@@ -1,6 +1,6 @@
 function TelemetryTable({ telemetries, satellites }) {
     return (
-        <div className=" bg-white h-64 shrink-0 overflow-hidden rounded-lg border border-gray-300">
+        <div className="h-64 shrink-0 overflow-hidden border border-gray-300">
             <div className="h-full overflow-y-auto">
                 <table className="w-full text-left text-xs">
                         <tr className="border-b border-gray-300">
