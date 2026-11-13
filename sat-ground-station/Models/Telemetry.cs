@@ -13,7 +13,11 @@ public class Telemetry
 
     [Required]
     [Column("satalliteId")]
-	public int SatelliteId {  get; private set; }
+	public long SatelliteId {  get; private set; }
+
+    [Required]
+    [Column("satalliteName")]
+    public string SatelliteName { get; private set; }
 
     [Required]
     [Column("timestamp")]
@@ -45,7 +49,7 @@ public class Telemetry
 
     public Telemetry() { }
 
-    public Telemetry(int satelliteId, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
+    public Telemetry(long satelliteId, string satelliteName, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
     {
         this.SatelliteId = satelliteId;
         this.Timestamp = timestamp;
@@ -55,6 +59,7 @@ public class Telemetry
         this.Velocity = velocity;
         this.Temperature = temperture;
         this.BatteryLevel = batteryLevel;
+        this.SatelliteName = satelliteName;
     }
 
 }

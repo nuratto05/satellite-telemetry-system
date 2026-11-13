@@ -30,6 +30,7 @@ public class TelemetryGenerator
 
             newTel = new Telemetry(
                 satellite.Id,
+                satellite.SatelliteName,
                 DateTime.UtcNow,
                 startingLongitude, //Longitude
                 CalculateLatitude(startingAngle), // Latitude
@@ -68,6 +69,7 @@ public class TelemetryGenerator
 
             newTel = new Telemetry(
                 satellite.Id,
+                satellite.SatelliteName,
                 DateTime.UtcNow,
                 newLongitude,
                 newLatitude,

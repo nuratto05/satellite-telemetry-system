@@ -1,44 +1,49 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
-using sat_sim.Models.Enums;
 using sat_sim.Dto;
 using sat_sim.Models;
+using sat_sim.Models.Enums;
 using sat_sim.Services;
 using System.Net;
+using System.Net.Http.Json;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 DotNetEnv.Env.Load();
 DotNetEnv.Env.TraversePath().Load();
 
 var signaleRendpointKey = (string)Environment.GetEnvironmentVariable("SIGNALR_ENDPOINT_KEY");
 
-Dictionary<int, Satellite> satellites = new Dictionary<int, Satellite>
+Dictionary<int, Satellite> satellites = new Dictionary<int, Satellite>();
+
+using HttpClient httpClient = new HttpClient();
+
+var options = new JsonSerializerOptions
 {
-    { 1, new Satellite(1, Status.Active) },
-    { 2, new Satellite(2, Status.Inactive) },
-    { 3, new Satellite(3, Status.Inactive) },
-    { 4, new Satellite(4, Status.Inactive) },
-    { 5, new Satellite(5, Status.Inactive) },
-    { 6, new Satellite(6, Status.Inactive) },
-    { 7, new Satellite(7, Status.Inactive) },
-    { 8, new Satellite(8, Status.Inactive) },
-    { 9, new Satellite(9, Status.Inactive) },
-    { 10, new Satellite(10, Status.Inactive) },
-    { 11, new Satellite(11, Status.Inactive) },
-    { 12, new Satellite(12, Status.Inactive) },
-    { 13, new Satellite(13, Status.Inactive) },
-    { 14, new Satellite(14, Status.Inactive) },
-    { 15, new Satellite(15, Status.Inactive) },
-    { 16, new Satellite(16, Status.Inactive) },
-    { 17, new Satellite(17, Status.Inactive) },
-    { 18, new Satellite(18, Status.Inactive) },
-    { 19, new Satellite(19, Status.Inactive) },
-    { 20, new Satellite(20, Status.Inactive) },
-    { 21, new Satellite(21, Status.Inactive) },
-    { 22, new Satellite(22, Status.Inactive) },
-    { 23, new Satellite(23, Status.Inactive) },
+    PropertyNameCaseInsensitive = true,
+    Converters =
+    {
+        new JsonStringEnumConverter()
+    }
 };
+
+var satelliteList = await httpClient.GetFromJsonAsync<List<Satellite>>(
+    "http://localhost:5142/api/satellite", options
+);
+
+if (satelliteList != null)
+{
+    int i = 0;
+    foreach (Satellite satellite in satelliteList)
+    {
+        satellites.Add(i++, satellite);
+        Console.WriteLine($"ID: {satellite.Id}");
+        Console.WriteLine($"Satellite ID: {satellite.SatelliteId}");
+        Console.WriteLine($"Satellite Name: {satellite.SatelliteName}");
+    }
+}
 
 
 TelemetryGenerator generator = new TelemetryGenerator();
@@ -90,19 +95,26 @@ while (true)
 
     Console.WriteLine("--------------------------------------------------------");
     int activeSatellites = 0;
-    foreach (Satellite sat in satellites.Values)
+
+    var order = satellites.Values.ToArray();
+    Random.Shared.Shuffle(order);
+
+    foreach (Satellite sat in order)
     {
-        if(sat.Status == Status.Active)
+
+        if (sat.Status == Status.Active)
         {
             activeSatellites++;
             Telemetry telemetry = generator.generate(sat);
             byte[] packet = PacketEncoder.EncodeTelemetry(telemetry);
             await connection.InvokeAsync("SendPacket", packet);
+
+            await Task.Delay(Random.Shared.Next(100, 1000));
         }
 
     }
     Console.WriteLine($"Data Points Sent {activeSatellites}");
     Console.WriteLine("--------------------------------------------------------");
 
-    Thread.Sleep(5000);
+    await Task.Delay(5000);
 }

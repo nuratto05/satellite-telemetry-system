@@ -3,8 +3,9 @@
 namespace sat_sim.Models;
 public class Telemetry
 {
-	public int SatelliteId {  get; private set; }
+	public long SatelliteId {  get; private set; }
     public DateTime Timestamp { get; private set; }
+    public string SatelliteName { get; private set; }
     public double Longitude { get; private set; }
     public double Latitude { get; private set; }
     public int Altitude { get; private set; }
@@ -14,9 +15,10 @@ public class Telemetry
 
 	public Telemetry() { }
 
-	public Telemetry(int satelliteId, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
+	public Telemetry(long satelliteId, string satelliteName, DateTime timestamp, double longitude, double latitude, int altitude, int velocity, int temperture, int batteryLevel)
 	{
 		this.SatelliteId = satelliteId;
+		this.SatelliteName = satelliteName;
 		this.Timestamp = timestamp;
 		this.Longitude = longitude;
 		this.Latitude = latitude;

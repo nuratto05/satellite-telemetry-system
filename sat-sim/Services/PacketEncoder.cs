@@ -39,6 +39,7 @@ public class PacketEncoder
             //Payload - Satellite
             writer.Write(tel.SatelliteId);
             writer.Write(tel.Timestamp.ToUniversalTime().Ticks);
+            writer.Write(tel.SatelliteName);
             writer.Write(tel.Longitude);
             writer.Write(tel.Latitude);
             writer.Write(tel.Altitude);

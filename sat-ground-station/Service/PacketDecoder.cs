@@ -35,11 +35,12 @@ public class PacketDecoder
 			byte size = reader.ReadByte();
 
             //Telemetry data
-            int satelliteId = reader.ReadInt32();
+            long satelliteId = reader.ReadInt64();
 
             long ticks = reader.ReadInt64();
             DateTime timeStamp = new DateTime(ticks, DateTimeKind.Utc);
 
+            string satelliteName = reader.ReadString();
             double longitude = reader.ReadDouble();
             double latitude = reader.ReadDouble();
             int altitude = reader.ReadInt32();
@@ -48,7 +49,7 @@ public class PacketDecoder
             int batteryLevel = reader.ReadInt32();
 
             //Telemetry Object
-            Telemetry telemetry = new Telemetry(satelliteId, timeStamp, longitude, latitude, altitude, velocity, temperature, batteryLevel);
+            Telemetry telemetry = new Telemetry(satelliteId, satelliteName, timeStamp, longitude, latitude, altitude, velocity, temperature, batteryLevel);
 
             return telemetry;
 
