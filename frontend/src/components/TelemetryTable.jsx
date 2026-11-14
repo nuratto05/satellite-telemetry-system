@@ -1,42 +1,38 @@
-function TelemetryTable({ telemetries, satellites }) {
+import BatteryBar from "./BatteryBar";
+
+function TelemetryTable({ telemetries, filter = "all" }) {
+    const data = telemetries.filter((t) => filter === "all" || t.satelliteName === filter);
+
     return (
-        <div className="h-64 shrink-0 overflow-hidden border border-gray-300">
-            <div className="h-full overflow-y-auto">
-                <table className="w-full text-left text-xs">
-                        <tr className="border-b border-gray-300">
-                            <th className="px-3 py-2 font-medium">Day</th>
-                            <th className="px-3 py-2 font-medium">Satellite</th>
-                            <th className="px-3 py-2 font-medium">Latitude</th>
-                            <th className="px-3 py-2 font-medium">Longitude</th>
-                            <th className="px-3 py-2 font-medium">Altitude (km)</th>
-                            <th className="px-3 py-2 font-medium">Velocity (ms)</th>
-                            <th className="px-3 py-2 font-medium">Temperature (°C)</th>
-                            <th className="px-3 py-2 font-medium">Battery Level</th>
-                        </tr>
+        <table className="w-full text-left text-xs tabular-nums">
+                <tr className="border-b border-slate-800 text-slate-400">
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Time</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Satellite</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Latitude</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Longitude</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Altitude (km)</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Velocity (m/s)</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Temperature (°C)</th>
+                    <th className="whitespace-nowrap px-4 py-2 font-medium">Battery</th>
+                </tr>
 
-                        {telemetries.map((t) => (
-                            <tr key={t.id} className="odd:bg-white even:bg-gray-400">
-                                <td className="px-3 py-2">{new Date(t.timestamp ?? Date.now()).toLocaleString()}</td>
-                                <td className="px-3 py-2">{satellites.find((s) => s.id === t.satelliteId)?.satelliteId ?? t.satelliteId}</td>
-                                <td className="px-3 py-2">{t.latitude.toFixed(4)}</td>
-                                <td className="px-3 py-2">{t.longitude.toFixed(4)}</td>
-                                <td className="px-3 py-2">{t.altitude.toFixed(1)}</td>
-                                <td className="px-3 py-2">{t.velocity}</td>
-                                <td className="px-3 py-2">{t.temperature}</td>
-                                <td className="px-3 py-2">{t.batteryLevel}%</td>
-                            </tr>
-                        ))}
-
-                        {telemetries.length === 0 && (
-                            <tr>
-                                <td colSpan={10} className="px-3 py-4 text-center text-gray-500">
-                                    Waiting for telemetry...
-                                </td>
-                            </tr>
-                        )}
-                </table>
-            </div>
-        </div>
+            <tbody className="divide-y divide-slate-800/70 text-slate-200">
+                {data.map((d) => (
+                    <tr key={d.id} className="hover:bg-slate-800/40">
+                        <td className="whitespace-nowrap px-4 py-2 text-slate-400">{d.timestamp }</td>
+                        <td className="px-4 py-2 font-medium text-white">{d.satelliteName}</td>
+                        <td className="px-4 py-2">{d.latitude.toFixed(4)}</td>
+                        <td className="px-4 py-2">{d.longitude.toFixed(4)}</td>
+                        <td className="px-4 py-2">{d.altitude.toFixed(1)}</td>
+                        <td className="px-4 py-2">{d.velocity}</td>
+                        <td className="px-4 py-2">{d.temperature}</td>
+                        <td className="px-4 py-2">
+                            <BatteryBar level={d.batteryLevel} />
+                        </td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     );
 }
 

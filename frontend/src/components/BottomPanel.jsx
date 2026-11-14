@@ -4,24 +4,35 @@ import AlertsTable from "./AlertsTable";
 
 function BottomPanel({ telemetries, alerts, satellites }) {
     const [tab, setTab] = useState("telemetry");
+    const [satFilter, setSatFilter] = useState("all");
 
     return (
-        <div className="flex h-64 shrink-0 flex-col overflow-hidden rounded-lg border border-gray-300">
+        <div className="flex h-72 w-full shrink-0 flex-col border-t border-slate-700/60 bg-[#0b1220]">
+            <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-4">
+                <div className="flex gap-6">
+                    <button onClick={() => setTab("telemetry")} className="-mb-px py-3 text-sm font-medium">
+                        Telemetry
+                    </button>
+                    <button onClick={() => setTab("alert")} className="-mb-px py-3 text-sm font-medium">
+                        Alerts
+                    </button>
+                </div>
 
-            <div className="bg-white flex shrink-0 gap-4 px-3">
-                <button key="telemetry" onClick={() => setTab("telemetry")} className="py-2 text-xs font-medium">
-                    Telemetry
-                </button>
-                <button key="alerts" onClick={() => setTab("Alerts")} className="py-2 text-xs font-medium">
-                    Alerts
-                </button>
+                <select value={satFilter} onChange={(e) => setSatFilter(e.target.value)}className="rounded-md border border-slate-700 bg-[#0f1829] px-2 py-1 text-xs text-slate-200">
+                    <option value="all">All satellites</option>
+                    {satellites.map((s) => (
+                        <option key={s.satelliteName} value={s.satelliteName}>
+                            {s.satelliteName}
+                        </option>
+                    ))}
+                </select>
             </div>
 
-            <div className="bg-white min-h-0 flex-1 overflow-y-auto">
+            <div className="min-h-0 flex-1 overflow-y-auto">
                 {tab === "telemetry" ? (
-                    <TelemetryTable telemetries={telemetries} satellites={satellites} />
+                    <TelemetryTable telemetries={telemetries} filter={satFilter} />
                 ) : (
-                    <AlertsTable alerts={alerts} satellites={satellites} />
+                    <AlertsTable alerts={alerts} satellites={satellites} filter={satFilter} />
                 )}
             </div>
         </div>
