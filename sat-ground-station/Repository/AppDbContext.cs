@@ -49,12 +49,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Alert>()
             .Property(a => a.TemperatureLevel)
             .HasConversion<string>();
-        modelBuilder.Entity<Alert>()
-            .Property(a => a.SeverityTypes)
-            .HasConversion(
-                v => v.Select(x => x.ToString()).ToArray(),
-                v => v.Select(x => Enum.Parse<SeverityTypes>(x)).ToList()
-            );
 
         //SEED DATA
 

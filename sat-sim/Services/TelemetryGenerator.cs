@@ -35,7 +35,7 @@ public class TelemetryGenerator
                 startingLongitude, //Longitude
                 CalculateLatitude(startingAngle), // Latitude
                 random.Next(400, 600), // Altitude
-                random.Next(20000, 29000), // Velocity mph
+                random.Next(26800, 28000), // Velocity mph
 				random.Next(-10, 40), // Temperature
                 100 // Battery level
             );
@@ -57,13 +57,13 @@ public class TelemetryGenerator
             double newLongitude = prevTel.Longitude + 2.0;
             double newLatitude = CalculateLatitude(newAngle);
             int newAltitude = prevTel.Altitude + random.Next(-2, 3);
-            int newVelocity = prevTel.Velocity + random.Next(-50, 51);
+            int newVelocity = prevTel.Velocity + random.Next(-300, 301);
             int newTemperature = prevTel.Temperature + random.Next(-2, 3);
             int newBatteryLevel = prevTel.BatteryLevel + random.Next(-1, 2);
 
             //Keep within range
             newAltitude = Math.Clamp(newAltitude, 480, 520);
-            newVelocity = Math.Clamp(newVelocity, 15000, 29000);
+            newVelocity = Math.Clamp(newVelocity, 22000, 36000);
             newTemperature = Math.Clamp(newTemperature, -80, 130);
             newBatteryLevel = Math.Clamp(newBatteryLevel, 10, 100);
 

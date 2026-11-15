@@ -16,13 +16,13 @@ public class SignalRServerHub : Hub
 
     public override async Task OnConnectedAsync()
     {
-        Console.WriteLine( $"Simulator connected: {Context.ConnectionId}");
+        Console.WriteLine( $"Client connected: {Context.ConnectionId}");
         await base.OnConnectedAsync();
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        Console.WriteLine($"Simulator disconnected: {Context.ConnectionId}");
+        Console.WriteLine($"Client disconnected: {Context.ConnectionId}");
 
         await base.OnDisconnectedAsync(exception);
     }

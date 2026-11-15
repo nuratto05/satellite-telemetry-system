@@ -35,6 +35,11 @@ namespace sat_ground_station.Migrations
                         .HasColumnType("text")
                         .HasColumnName("batteryLevel");
 
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("message");
+
                     b.Property<int>("SatelliteId")
                         .HasColumnType("integer")
                         .HasColumnName("satelliteId");
@@ -48,11 +53,6 @@ namespace sat_ground_station.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("severity");
-
-                    b.Property<string[]>("SeverityTypes")
-                        .IsRequired()
-                        .HasColumnType("text[]")
-                        .HasColumnName("type");
 
                     b.Property<string>("TemperatureLevel")
                         .HasColumnType("text")

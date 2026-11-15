@@ -37,7 +37,20 @@ public class Alert
     [Column("batteryLevel")]
     public SeverityStatus? BatteryLevel { get; set; } = SeverityStatus.Moderate;
 
-    [Column("type")]
-    public List<SeverityTypes> SeverityTypes { get; set; } = new();
+    [Column("message")]
+    public String Message { get; set; }
+
+    public void addMessage(String message)
+    {
+        if(Message == "")
+        {
+            message = message + ", ";
+            Message += message;
+        }
+        else
+        {
+            Message += message;
+        }
+    }
 
 } 

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace sat_ground_station.Migrations
 {
     /// <inheritdoc />
-    public partial class createdb : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,7 @@ namespace sat_ground_station.Migrations
                     velocityLevel = table.Column<string>(type: "text", nullable: true),
                     temperatureLevel = table.Column<string>(type: "text", nullable: true),
                     batteryLevel = table.Column<string>(type: "text", nullable: true),
-                    type = table.Column<string[]>(type: "text[]", nullable: false)
+                    message = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

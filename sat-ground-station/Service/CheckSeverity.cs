@@ -36,16 +36,16 @@ public class CheckSeverity
         int velocity = telemetry.Velocity;
         alert.Severity = SeverityStatus.Moderate;
 
-        if (velocity <= 16500) // TOO SLOW STARTS TO DE-ORBIT
+        if (velocity <= 25000) // TOO SLOW STARTS TO DE-ORBIT
         {
             alert.VelocityLevel = SeverityStatus.Severe;
-            alert.SeverityTypes.Add(SeverityTypes.SevereVelocity);
+            alert.addMessage("Velocity Level is entering " + SeverityStatus.Severe.ToString() + " levels");
             aggregated = MaxSeverity(aggregated, SeverityStatus.Severe);
         }
-        else if (velocity >= 28000)// TOO FAST LOST TO DEEP SPACE
+        else if (velocity >= 34000)// TOO FAST LOST TO DEEP SPACE
         {
             alert.VelocityLevel = SeverityStatus.Critical;
-            alert.SeverityTypes.Add(SeverityTypes.CriticalVelocity);
+            alert.addMessage("Velocity Level is entering " + SeverityStatus.Critical.ToString() + " levels");
             aggregated = MaxSeverity(aggregated, SeverityStatus.Critical);
         }
     }
@@ -59,13 +59,13 @@ public class CheckSeverity
         if (batteryLevel <= 30)// BATTERY IS TOO LOW TO POWER THRUSTERS
         {
             alert.BatteryLevel = SeverityStatus.Critical;
-            alert.SeverityTypes.Add(SeverityTypes.CriticalBattery);
+            alert.addMessage("Battery Level is entering " + SeverityStatus.Critical.ToString() + " levels");
             aggregated = MaxSeverity(aggregated, SeverityStatus.Critical);
         }
         else if (batteryLevel <= 50)// BATTERY IS ENTERING DANGEROUS LEVELS
         {
             alert.BatteryLevel = SeverityStatus.Severe;
-            alert.SeverityTypes.Add(SeverityTypes.SevereBattery);
+            alert.addMessage("Battery Level is entering " + SeverityStatus.Severe.ToString() + " levels");
             aggregated = MaxSeverity(aggregated, SeverityStatus.Severe);
         }
     }
@@ -79,13 +79,13 @@ public class CheckSeverity
         if (temperature <= -65 || temperature >= 120)// SATELLITE ENTERS LOW POWER MODE 
         {
             alert.TemperatureLevel = SeverityStatus.Critical;
-            alert.SeverityTypes.Add(SeverityTypes.CriticalTemperature);
+            alert.addMessage("Temperature Level is entering " + SeverityStatus.Critical.ToString() + " levels");
             aggregated = MaxSeverity(aggregated, SeverityStatus.Critical);
         }
         else if (temperature <= -20 || temperature >= 60) // CAUSES PHYSICAL DAMAGE TO SATELLITE
         {
             alert.TemperatureLevel = SeverityStatus.Severe;
-            alert.SeverityTypes.Add(SeverityTypes.SevereTemperature);
+            alert.addMessage("Temperature Level is entering " + SeverityStatus.Severe.ToString() + " levels");
             aggregated = MaxSeverity(aggregated, SeverityStatus.Severe);
         }
     }
