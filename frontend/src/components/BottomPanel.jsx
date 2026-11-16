@@ -7,8 +7,8 @@ function BottomPanel({ telemetries, alerts, satellites }) {
     const [satFilter, setSatFilter] = useState("all");
 
     return (
-        <div className="flex h-72 w-full shrink-0 flex-col border-t border-slate-700/60 bg-[#0b1220]">
-            <div className="flex shrink-0 items-center justify-between border-b border-slate-800 px-4">
+        <div className="flex h-72 w-full shrink-0 flex-col border-t border-[#16181c] bg-black">
+            <div className="flex shrink-0 items-center justify-between border-b border-[#16181c] px-4">
                 <div className="flex gap-6">
                     <button onClick={() => setTab("telemetry")} className="-mb-px py-3 text-sm font-medium">
                         Telemetry
@@ -18,7 +18,7 @@ function BottomPanel({ telemetries, alerts, satellites }) {
                     </button>
                 </div>
 
-                <select value={satFilter} onChange={(e) => setSatFilter(e.target.value)}className="rounded-md border border-slate-700 bg-[#0f1829] px-2 py-1 text-xs text-slate-200">
+                <select value={satFilter} onChange={(e) => setSatFilter(e.target.value)}className="rounded-md border border-white px-2 py-1 text-xs bg-black">
                     <option value="all">All satellites</option>
                     {satellites.map((s) => (
                         <option key={s.satelliteName} value={s.satelliteName}>
