@@ -16,7 +16,7 @@ function Earth() {
         const height = container.clientHeight;
 
         // CAMERA
-        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
         camera.position.set(0, 0, 5);
 
         // RENDERER
