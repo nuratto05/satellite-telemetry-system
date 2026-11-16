@@ -83,3 +83,6 @@ All controllers are in `sat-ground-station/Controllers`. JSON enum serialization
   - Body: `Mission` JSON.
 - PUT `/api/mission/{missionId}`
   - Update mission fields (partial update supported).
+
+## IMAGES
+<img width="1915" height="909" alt="image" src="https://github.com/user-attachments/assets/2f5cc6f8-4bc8-41c1-a2a7-c286947e9229" />
