@@ -23,7 +23,7 @@ export default function useTelemetry() {
 
         // Listen for incoming telemetry
         connection.on("SendTelemetry", (data) => {
-            setTelemetry(prev => [data, ...prev].slice(0, 20));
+            setTelemetry(prev => [data, ...prev].slice(0, 100));
         });
 
         startConnection();
