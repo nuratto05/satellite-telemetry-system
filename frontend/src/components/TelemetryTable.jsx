@@ -5,7 +5,7 @@ function TelemetryTable({ telemetries, filter = "all" }) {
 
     return (
         <table className="w-full text-left text-xs tabular-nums">
-                <tr className="border-b border-slate-800 text-slate-400">
+                <tr className="border-b border-[#16181c] text-white">
                     <th className="whitespace-nowrap px-4 py-2 font-medium">Time</th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium">Satellite</th>
                     <th className="whitespace-nowrap px-4 py-2 font-medium">Latitude</th>
@@ -16,10 +16,10 @@ function TelemetryTable({ telemetries, filter = "all" }) {
                     <th className="whitespace-nowrap px-4 py-2 font-medium">Battery</th>
                 </tr>
 
-            <tbody className="divide-y divide-slate-800/70 text-slate-200">
+            <tbody className="text-white">
                 {data.map((d) => (
-                    <tr key={d.id} className="hover:bg-slate-800/40">
-                        <td className="whitespace-nowrap px-4 py-2 text-slate-400">{d.timestamp }</td>
+                    <tr key={d.id} className="hover:bg-[#16181c]">
+                        <td className="whitespace-nowrap px-4 py-2 text-white">{d.timestamp }</td>
                         <td className="px-4 py-2 font-medium text-white">{d.satelliteName}</td>
                         <td className="px-4 py-2">{d.latitude.toFixed(4)}</td>
                         <td className="px-4 py-2">{d.longitude.toFixed(4)}</td>
